@@ -16,7 +16,7 @@ export class PinboardListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.pinBoards = this._pinboardService.getPinboards();
+    this.pinBoards = this._pinboardService.getAll();
     // let newPost = new Post('First post!', 'Yeah this is def my first post on this pinboard!');
     // this.pinBoards[0].addPost(newPost);
     // this.posts = this.pinBoards[0].posts;

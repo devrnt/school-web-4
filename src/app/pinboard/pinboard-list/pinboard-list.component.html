@@ -8,7 +8,7 @@
     <div class="uk-card uk-card-default uk-card-body">
       <h3 class="uk-card-title">{{pinboard.city}}</h3>
       <p>Aantal posts: {{pinboard.getAmountOfPosts()}}</p>
-      <button class="uk-button uk-button-primary">Bekijk</button>
+      <button class="uk-button uk-button-primary" [routerLink]="['/prikbord', pinboard.city]">Bekijk</button>
     </div>
   </div>
 </div>
