@@ -15,9 +15,7 @@ export class PinboardService {
       pinboardWithPosts,
       new PinBoard('Oudenaarde', new Location(888.9, 789.2)),
       new PinBoard('Dendermonde', new Location(98, 99))
-    ]
-
-    
+    ]    
   }
 
   getByCityName(cityName: string): PinBoard {

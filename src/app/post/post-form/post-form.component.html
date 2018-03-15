@@ -1,0 +1,14 @@
+<div class="uk-card uk-card-primary uk-margin-top uk-card-body">
+  <form>
+    <h2 class="uk-heading-line">Voeg hier uw post toe</h2>
+    <div class="uk-margin">
+      <input type="text" class="uk-input" placeholder="Post titel" #title required>
+    </div>
+    <div class="uk-margin">
+      <textarea class="uk-textarea" rows="4" placeholder="Post tekst hierzo..." #body required></textarea>
+    </div>
+    <div class="uk-margin">
+      <button type="submit" class="uk-button uk-button-primary" (click)="doSomething(title, body)">PostIt</button>
+    </div>
+  </form>
+</div>
