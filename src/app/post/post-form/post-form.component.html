@@ -1,14 +1,16 @@
 <div class="uk-card uk-card-primary uk-margin-top uk-card-body">
-  <form>
+  <form [formGroup]='newPost' (ngSubmit)="onSubmit()">
     <h2 class="uk-heading-line">Voeg hier uw post toe</h2>
     <div class="uk-margin">
-      <input type="text" class="uk-input" placeholder="Post titel" #title required>
+      <input type="text" class="uk-input" placeholder="Post titel" formControlName="title" #title required>
     </div>
     <div class="uk-margin">
-      <textarea class="uk-textarea" rows="4" placeholder="Post tekst hierzo..." #body required></textarea>
+      <textarea class="uk-textarea" rows="4" placeholder="Post tekst hierzo..." formControlName="body" required></textarea>
     </div>
     <div class="uk-margin">
-      <button type="submit" class="uk-button uk-button-primary" (click)="doSomething(title, body)">PostIt</button>
+      <button type="submit" class="uk-button uk-button-primary">PostIt</button>
     </div>
   </form>
 </div>
+{{newPost.value | json}} Geldig: {{newPost.valid}}{{title.className}}
+{{newPost.get('title').errors | json}}

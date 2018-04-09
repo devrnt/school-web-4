@@ -13,6 +13,10 @@ import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.co
 import { PinboardDetailComponent } from './pinboard/pinboard-detail/pinboard-detail.component';
 import { PostFormComponent } from './post/post-form/post-form.component';
 
+import { ReactiveFormsModule } from '@angular/forms';
+
+import {HttpClientModule} from '@angular/common/http';
+
 
 const appRoutes: Routes = [
   { path: 'prikborden', component: PinboardListComponent },
@@ -33,9 +37,11 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true } //debugging purpose only
+      { enableTracing: false } //debugging purpose only
     )
   ],
   providers: [PinboardService],

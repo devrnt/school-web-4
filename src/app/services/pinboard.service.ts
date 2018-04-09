@@ -1,40 +1,69 @@
 import { Injectable } from '@angular/core';
-import { PinBoard } from '../models/pin-board.model';
+import { Pinboard } from '../models/pinboard.model';
 import { Location } from '../models/location.model';
 import { Post } from '../models/post.model';
+import { HttpClient } from '@angular/common/http';
+
+import { Observable } from 'rxjs/observable';
+
+import 'rxjs/add/operator/map';
+
+import { catchError, map, tap } from 'rxjs/operators';
+
+
 
 @Injectable()
 export class PinboardService {
-  private pinboards: PinBoard[];
 
-  constructor() {
-    let pinboardWithPosts = new PinBoard('Gent', new Location(4,6));
-    pinboardWithPosts.addPost(new Post('Eerste Post!', 'Lorem ipsum naturrlijk'))
-    pinboardWithPosts.addPost(new Post('Tweede titel zeg!', 'lorem ipsum twee natuurlijk'));
-    this.pinboards = [
-      pinboardWithPosts,
-      new PinBoard('Oudenaarde', new Location(888.9, 789.2)),
-      new PinBoard('Dendermonde', new Location(98, 99))
-    ]    
+  private readonly _httpUrl = '/api/';
+
+  constructor(private http: HttpClient) { }
+
+  getAllPinboards(): Observable<Pinboard[]> {
+    return this.http.get(`${this._httpUrl}/pinboards`)
+      .pipe(
+        map((list: any[]): Pinboard[] =>
+          list.map(item =>
+            new Pinboard(item.city, new Location(item.location.longitude, item.location.latitude))
+          )
+        )
+      );
   }
 
-  getByCityName(cityName: string): PinBoard {
-    let foundPinboard = this.pinboards
-      .find(pb => pb.city.trim().toLocaleLowerCase() === cityName.trim().toLocaleLowerCase());
-
-    if (foundPinboard != undefined) {
-      return foundPinboard;
-    } else {
-      throw new Error('Geen borden in deze stad!');
-    }
+  getPinboard(id: string): Observable<Pinboard> {
+    return this.http
+      .get(`${this._httpUrl}/pinboard/${id}`)
+      .pipe(map(Pinboard.fromJSON));
   }
 
-  getAll(): PinBoard[] {
-    return this.pinboards;
+  addPostToPinboard(post: Post, pinboard: Pinboard): Observable<Post> {
+    return this.http
+      .post(`${this._httpUrl}/pinboard/${pinboard.id}/posts`, post)
+      .pipe(map(Post.fromJSON));
   }
 
-  addPinboard(pinboard: PinBoard) {
-    this.pinboards.push(pinboard);
+  addPinboard(pinboard: Pinboard): Observable<Pinboard> {
+    return this.http
+      .post(`${this._httpUrl}/pinboards/`, pinboard)
+      .pipe(map(Pinboard.fromJSON))
   }
+
+
+
+  // getByCityName(cityName: string): Observable<Pinboard> {
+  //   let foundPinboard = this.getPinboardsHttp()
+  //     .map(pinboards => pinboards.find(pinboard => pinboard.city.toLocaleLowerCase() === cityName.toLocaleLowerCase()));
+  //   if (foundPinboard != undefined) {
+  //     return foundPinboard;
+  //   } else {
+  //     throw new Error('Geen borden in deze stad!');
+  //   }
+  // }
+
+
+
+
+
+
 
 }

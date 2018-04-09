@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
-import { PinBoard } from '../../models/pin-board.model';
+import { Pinboard } from '../../models/pinboard.model';
 import { PinboardService } from '../../services/pinboard.service';
+import { Observable } from 'rxjs/Observable';
 
 
 @Component({
@@ -11,18 +12,22 @@ import { PinboardService } from '../../services/pinboard.service';
   styleUrls: ['./pinboard-detail.component.css']
 })
 export class PinboardDetailComponent implements OnInit {
-  pinBoard: PinBoard;
+  pinBoard: Pinboard;
   cityNameFromUrl: string;
-  constructor(private _route: ActivatedRoute, private _router: Router, private _pinboardService: PinboardService) {
 
+  constructor(private _route: ActivatedRoute, private _router: Router, private _pinboardService: PinboardService) {
   }
 
   ngOnInit() {
     this.cityNameFromUrl = this._route.snapshot.paramMap.get('stad');
-    try {
-      this.pinBoard = this._pinboardService.getByCityName(this.cityNameFromUrl);
-    } catch (err) {
-      console.error(err);
-    }
+    // try {
+    //   this._pinboardService.getByCityName(this.cityNameFromUrl)
+    //     .subscribe(board => {
+    //       console.log(board);
+    //         this.pinBoard = board;
+    //     });
+    // } catch (err) {
+    //   console.error(err);
+    // }
   }
 }

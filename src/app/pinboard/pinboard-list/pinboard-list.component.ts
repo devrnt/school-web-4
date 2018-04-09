@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { PinBoard } from '../../models/pin-board.model';
+import { Pinboard } from '../../models/pinboard.model';
 import { Post } from '../../models/post.model';
 import { Location } from '../../models/location.model';
 import { PinboardService } from '../../services/pinboard.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-pinboard-list',
@@ -10,16 +11,18 @@ import { PinboardService } from '../../services/pinboard.service';
   styleUrls: ['./pinboard-list.component.css']
 })
 export class PinboardListComponent implements OnInit {
-  pinBoards: PinBoard[];
-  
+  private _pinboards: Pinboard[];
+  pinBoards: Observable<Pinboard[]>;
+
   constructor(private _pinboardService: PinboardService) {
   }
 
   ngOnInit() {
-    this.pinBoards = this._pinboardService.getAll();
-    // let newPost = new Post('First post!', 'Yeah this is def my first post on this pinboard!');
-    // this.pinBoards[0].addPost(newPost);
-    // this.posts = this.pinBoards[0].posts;
+    this.pinBoards = this._pinboardService.getAllPinboards();
+  }
+
+  getPinBoards() {
+    return this.pinBoards;
   }
 
 }
