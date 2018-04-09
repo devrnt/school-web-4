@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
-const Location = require('./Location');
 
 let PinboardSchema = new mongoose.Schema({
     city: String,
-    location: Location,
-    posts: [Object]
+    location: {
+        longitude: Number,
+        latitude: Number
+    },
+    posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }]
 });
 
 mongoose.model('Pinboard', PinboardSchema);

@@ -9,11 +9,10 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 // models 
-require('./models/Location');
 require('./models/Pinboard');
 require('./models/Post');
 
-mongoose.connect('mongodb://localhost/posts');
+mongoose.connect('mongodb://localhost/pinboardsdb');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
