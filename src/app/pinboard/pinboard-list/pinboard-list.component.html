@@ -3,8 +3,12 @@
 </h2>
 
 <!-- display all the pinboards -->
+<div *ngIf='errorMsg' class="ui error message">{{errorMsg}}</div>
+
+<input (keyup)="filterPinboard$.next($event.target.value)" class="uk-form-small uk-form-width-medium uk-input" type="text" id="filter"
+  name="filter" placeholder="filter op pinboard stad">
 <div class="uk-grid-medium uk-child-width-expand@s uk-text-center" uk-grid>
-  <div *ngFor="let pinboard of getPinBoards() | async">
+  <div *ngFor="let pinboard of pinboards | pinboardFilter:filterPinboardName">
     <div class="uk-card uk-card-default uk-card-body">
       <h3 class="uk-card-title">{{pinboard.city}}</h3>
       <p>Aantal posts: {{pinboard.getAmountOfPosts()}}</p>
