@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/observable';
 
 import 'rxjs/add/operator/map';
 
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, tap, filter } from 'rxjs/operators';
 
 
 
@@ -23,9 +23,7 @@ export class PinboardService {
     return this.http.get(`${this._httpUrl}/pinboards`)
       .pipe(
         map((list: any[]): Pinboard[] =>
-          list.map(item =>
-            new Pinboard(item.city, new Location(item.location.longitude, item.location.latitude))
-          )
+          list.map(Pinboard.fromJSON)
         )
       );
   }
@@ -46,6 +44,14 @@ export class PinboardService {
     return this.http
       .post(`${this._httpUrl}/pinboards/`, pinboard)
       .pipe(map(Pinboard.fromJSON))
+  }
+
+  getPinboardFromCityName(city: string): Observable<Pinboard> {
+    return this.getAllPinboards()
+      .map(pinboards => {
+        let found = pinboards.filter(pin => pin.city.trim().toLocaleLowerCase() === city.trim().toLocaleLowerCase());
+        return (found.length > 0) ? found[0] : null
+      });
   }
 
 

@@ -7,7 +7,8 @@ export class Post {
     constructor(title: string, body: string, dateCreated: Date = null) {
         this._title = title;
         this._body = body;
-        this._dateCreated ? dateCreated : new Date();
+        // if dateCreated is null check
+        dateCreated ? this._dateCreated = dateCreated : this._dateCreated = new Date();
     }
 
     static fromJSON(json: any): any {

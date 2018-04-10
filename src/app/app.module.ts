@@ -11,11 +11,12 @@ import { HeaderComponent } from './shared/header/header.component';
 import { RouterModule, Routes, Router } from '@angular/router';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 import { PinboardDetailComponent } from './pinboard/pinboard-detail/pinboard-detail.component';
-import { PostFormComponent } from './post/post-form/post-form.component';
+import { AddPostComponent } from './post/add-post/add-post.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { PinboardFilterPipe } from './pinboard/pinboard-list/pinboard-filter.pipe';
 
 
 const appRoutes: Routes = [
@@ -32,7 +33,8 @@ const appRoutes: Routes = [
     HeaderComponent,
     PageNotFoundComponent,
     PinboardDetailComponent,
-    PostFormComponent
+    AddPostComponent,
+    PinboardFilterPipe
   ],
   imports: [
     BrowserModule,

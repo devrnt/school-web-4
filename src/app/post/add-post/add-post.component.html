@@ -1,8 +1,8 @@
 <div class="uk-card uk-card-primary uk-margin-top uk-card-body">
-  <form [formGroup]='newPost' (ngSubmit)="onSubmit()">
+  <form [formGroup]="newPost" (ngSubmit)="onSubmit()">
     <h2 class="uk-heading-line">Voeg hier uw post toe</h2>
     <div class="uk-margin">
-      <input type="text" class="uk-input" placeholder="Post titel" formControlName="title" #title required>
+      <input type="text" class="uk-input" ng-class="{uk-form-danger: newPost.valid}" placeholder="Post titel" formControlName="title" #title required>
     </div>
     <div class="uk-margin">
       <textarea class="uk-textarea" rows="4" placeholder="Post tekst hierzo..." formControlName="body" required></textarea>
@@ -12,5 +12,7 @@
     </div>
   </form>
 </div>
-{{newPost.value | json}} Geldig: {{newPost.valid}}{{title.className}}
+{{errorMsg}}
+{{newPost.value | json}} Geldig: {{newPost.valid}}{{title.className=='whae'}}
 {{newPost.get('title').errors | json}}
+

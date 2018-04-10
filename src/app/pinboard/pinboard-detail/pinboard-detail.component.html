@@ -1,15 +1,15 @@
-<div *ngIf="pinBoard">
+<div *ngIf="pinboard">
   <h2 class="uk-heading uk-margin-top">
     Er werd een prikbord gevonden in
-    <b>{{pinBoard.city}}!</b>
+    <b>{{pinboard.city}}!</b>
   </h2>
   <p>
-    Het bord bevat {{pinBoard.getAmountOfPosts()}} posts. {{pinBoard.getAmountOfPosts()>0? 'Lees ze hieronder!':'Maak snel de
+    Het bord bevat {{pinboard.getAmountOfPosts()}} posts. {{pinboard.getAmountOfPosts()>0? 'Lees ze hieronder!':'Maak snel de
     eerste aan!'}}
   </p>
   <!-- display all the pinboards -->
-<div class="uk-grid-medium uk-child-width-expand@s" uk-grid>
-    <div *ngFor="let post of pinBoard.posts">
+  <div class="uk-grid-medium uk-child-width-expand@s" uk-grid>
+    <div *ngFor="let post of pinboard.posts">
       <div class="uk-card uk-card-default uk-card-body">
         <h3 class="uk-card-title">{{post.title}}</h3>
         <p>Aantal posts: {{post.body}}
@@ -19,16 +19,18 @@
     </div>
   </div>
 </div>
-<div *ngIf="!pinBoard">
+<div *ngIf="!pinboard">
   <h2 class="uk-heading uk-margin-top">
     Wat jammer, er is nog geen Prikbord in
     <!-- In future make a pipe instead of this mess -->
     <b>{{cityNameFromUrl.charAt(0).toUpperCase() + cityNameFromUrl.slice(1)}}</b>
   </h2>
   <p>
-    U kunt het best een mail versturen naar de eigenaar (contactgegvens te vinden onderaan idk lol) 
-    met aanvraag om een prikbord te maken in uw stad.<br><br> Probeer nog eens in de nabije toekomst
+    U kunt het best een mail versturen naar de eigenaar (contactgegvens te vinden onderaan idk lol) met aanvraag om een prikbord
+    te maken in uw stad.
+    <br>
+    <br> Probeer nog eens in de nabije toekomst
   </p>
 </div>
 
-<post-form [pinBoard]="pinBoard"></post-form>
+<add-post [pinboard]="pinboard"></add-post>
