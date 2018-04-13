@@ -46,9 +46,12 @@ export class AddPostComponent implements OnInit {
       let post_title = this.newPost.value.title;
       let post_body = this.newPost.value.body;
       let post = new Post(post_title, post_body);
+      // this.pinboard.posts.push(post);
+      this.pinboard.addPost(post);
       this._pinboardService.addPostToPinboard(post, this.pinboard)
         .subscribe(
-          (posts) => { console.log(posts)},
+          // add the new post to the pinboard
+          post => { this.pinboard.addPost(post) },
           (error: HttpErrorResponse) => {
             this.errorMsg = `Error ${error.status} while adding post for ${
               this.pinboard.city
@@ -58,5 +61,6 @@ export class AddPostComponent implements OnInit {
     } else {
       this.errorMsg = 'Velden zijn niet geldig'
     }
+
   }
 }
