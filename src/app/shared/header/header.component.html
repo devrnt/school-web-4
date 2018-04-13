@@ -1,20 +1,15 @@
-<nav class="uk-navbar-container" style="background-color: #28a5f5" uk-navbar>
-  <div class="uk-navbar-left">
-    <h2 style="color: white">CityPinBoard</h2>
-    <ul class="uk-navbar-nav uk-margin-left">
-      <li class="uk-active">
-        <a routerLink="/prikborden" routerLinkActive="active-link" style="color:whitesmoke">Prikbordenlijst</a>
-      </li>
-    </ul>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="/">
+      <h2 class="title is-4">CityPinBoard</h2>
+    </a>
   </div>
-  <div class="uk-navbar-right">
-    <ul class="uk-navbar-nav">
-      <li class="uk-active">
-        <a href="#" style="color:white;">LOGIN</a>
-      </li>
-      <!-- <li>
-        <a href=""></a>
-      </li> -->
-    </ul>
+  <div class="navbar-start">
+    <a routerLink="/prikborden" routerLinkActive="active-link" class="navbar-item">Prikbordenlijst</a>
+  </div>
+  <div class="navbar-end">
+    <div class="navbar-item">
+      <a href="#">Login</a>
+    </div>
   </div>
 </nav>
