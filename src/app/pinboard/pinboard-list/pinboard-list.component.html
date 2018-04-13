@@ -1,18 +1,32 @@
-<h2 class="uk-heading-line uk-margin-top">
+<div class="subtitle is-3">
   Hier vindt u een overzicht van alle prikborden in België
-</h2>
+</div>
 
-<!-- display all the pinboards -->
-<div *ngIf='errorMsg' class="ui error message">{{errorMsg}}</div>
+<div *ngIf='errorMsg' class="notification is-danger">
+  <button class="delete"></button>
+  {{errorMsg}}
+</div>
 
-<input (keyup)="filterPinboard$.next($event.target.value)" class="uk-form-small uk-form-width-medium uk-input" type="text" id="filter"
-  name="filter" placeholder="filter op pinboard stad">
-<div class="uk-grid-medium uk-child-width-expand@s uk-text-center" uk-grid>
-  <div *ngFor="let pinboard of pinboards | pinboardFilter:filterPinboardName">
-    <div class="uk-card uk-card-default uk-card-body">
-      <h3 class="uk-card-title">{{pinboard.city}}</h3>
-      <p>Aantal posts: {{pinboard.getAmountOfPosts()}}</p>
-      <button class="uk-button uk-button-primary" [routerLink]="['/prikbord', pinboard.city]">Bekijk</button>
+<!-- All pinboards -->
+<div class="field">
+  <div class="control">
+    <input (keyup)="filterPinboard$.next($event.target.value)" class="input" type="text" id="filter" name="filter" placeholder="filter op pinboard stad">
+  </div>
+</div>
+<div class="columns">
+  <div *ngFor="let pinboard of pinboards | pinboardFilter:filterPinboardName" class="column">
+    <div class="card">
+      <div class="card-header">
+        <p class="card-header-title">{{pinboard.city}}</p>
+      </div>
+      <div class="card-content">
+        <div class="content">
+          <p>Aantal posts: {{pinboard.getAmountOfPosts()}}</p>
+          <button class="button is-primary" [routerLink]="['/prikbord', pinboard.city]">Bekijk</button>
+
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
