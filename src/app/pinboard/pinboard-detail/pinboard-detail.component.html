@@ -1,36 +1,66 @@
-<div *ngIf="pinboard">
-  <h2 class="uk-heading uk-margin-top">
-    Er werd een prikbord gevonden in
-    <b>{{pinboard.city}}!</b>
-  </h2>
-  <p>
-    Het bord bevat {{pinboard.getAmountOfPosts()}} posts. {{pinboard.getAmountOfPosts()>0? 'Lees ze hieronder!':'Maak snel de
-    eerste aan!'}}
-  </p>
-  <!-- display all the pinboards -->
-  <div class="uk-grid-medium uk-child-width-expand@s" uk-grid>
-    <div *ngFor="let post of pinboard.posts">
-      <div class="uk-card uk-card-default uk-card-body">
-        <h3 class="uk-card-title">{{post.title}}</h3>
-        <p>Aantal posts: {{post.body}}
-          <p>
-            <p class="uk-text-muted">Gemaakt op: {{post.dateCreated | date}}</p>
+<section class="section">
+
+  <div *ngIf="pinboard">
+    <h3 class="title is-3">
+      Er werd een prikbord gevonden in
+      <b>{{pinboard.city}}!</b>
+    </h3>
+    <h5 class="subtitle is-5">
+      Het bord bevat {{pinboard.getAmountOfPosts()}} posts. {{pinboard.getAmountOfPosts()>0? 'Lees ze hieronder!':'Maak snel de
+      eerste aan!'}}
+    </h5>
+
+    <!-- display all the posts of the pinboard -->
+    <div class="columns is-multiline">
+      <div *ngFor="let post of pinboard.posts" class="column is-one-quarter">
+        <div class="card">
+          <div class="card-header">
+            <p class="card-header-title">{{post.title}}</p>
+          </div>
+          <div class="card-content">
+            <div class="content">
+              <p>{{post.body}}</p>
+              <p class="has-text-weight-light">
+                <i class="far fa-calendar-alt"></i>
+                {{post.dateCreated | date}}
+            </div>
+
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div *ngIf="!pinboard">
-  <h2 class="uk-heading uk-margin-top">
-    Wat jammer, er is nog geen Prikbord in
-    <!-- In future make a pipe instead of this mess -->
-    <b>{{cityNameFromUrl.charAt(0).toUpperCase() + cityNameFromUrl.slice(1)}}</b>
-  </h2>
-  <p>
-    U kunt het best een mail versturen naar de eigenaar (contactgegvens te vinden onderaan idk lol) met aanvraag om een prikbord
-    te maken in uw stad.
-    <br>
-    <br> Probeer nog eens in de nabije toekomst
-  </p>
-</div>
+  <div *ngIf="!pinboard">
+    <h3 class="title is-3">
+      Wat jammer, er is nog geen Prikbord in
+      <!-- In future make a pipe instead of this mess -->
+      <b>{{cityNameFromUrl.charAt(0).toUpperCase() + cityNameFromUrl.slice(1)}}</b>
+    </h3>
+    <p>
+      U kunt het best een mail versturen naar de eigenaar (contactgegvens te vinden onderaan idk lol) met aanvraag om een prikbord
+      te maken in uw stad.
+      <br>
+      <br> Probeer nog eens in de nabije toekomst
+    </p>
+  </div>
+</section>
 
-<add-post [pinboard]="pinboard"></add-post>
+<section class="section">
+  <div class="tile is-ancestor">
+    <article class="tile is-vertical is-9 is-parent">
+      <div class="tile is-child box">
+        <p class="title">Voeg hier uw een post toe</p>
+        <add-post [pinboard]="pinboard"></add-post>
+      </div>
+    </article>
+    <article class="tile is-vertical is-parent">
+      <div class="tile is-child notification is-primary">
+        <p class="title">How to?</p>
+        <p>
+          Wilt u iets plaatsen over deze stad, of een opmerking geven. Hier is de plaats! Hier kunt u een nieuwe post plaatsen, er
+          is wel een login nodig. Maak vlug even een profiel aan, het duurt maximum 56seconden (I timed it)
+        </p>
+      </div>
+    </article>
+  </div>
+</section>

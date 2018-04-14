@@ -17,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { HttpClientModule } from '@angular/common/http';
 import { PinboardFilterPipe } from './pinboard/pinboard-list/pinboard-filter.pipe';
+import { FooterComponent } from './shared/footer/footer.component';
 
 
 const appRoutes: Routes = [
@@ -34,7 +35,8 @@ const appRoutes: Routes = [
     PageNotFoundComponent,
     PinboardDetailComponent,
     AddPostComponent,
-    PinboardFilterPipe
+    PinboardFilterPipe,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

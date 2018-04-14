@@ -1,18 +1,23 @@
-<div class="uk-card uk-card-primary uk-margin-top uk-card-body">
-  <form [formGroup]="newPost" (ngSubmit)="onSubmit()">
-    <h2 class="uk-heading-line">Voeg hier uw post toe</h2>
-    <div class="uk-margin">
-      <input type="text" class="uk-input" ng-class="{uk-form-danger: newPost.valid}" placeholder="Post titel" formControlName="title" #title required>
-    </div>
-    <div class="uk-margin">
-      <textarea class="uk-textarea" rows="4" placeholder="Post tekst hierzo..." formControlName="body" required></textarea>
-    </div>
-    <div class="uk-margin">
-      <button type="submit" class="uk-button uk-button-primary">PostIt</button>
-    </div>
-  </form>
-</div>
-{{errorMsg}}
-{{newPost.value | json}} Geldig: {{newPost.valid}}{{title.className=='whae'}}
-{{newPost.get('title').errors | json}}
+<form [formGroup]="newPost" (ngSubmit)="onSubmit()">
 
+  <div class="field">
+    <div class="control">
+      <input type="text" class="input" placeholder="Post titel" [ngClass]="(newPost.get('title').errors) != null && !newPost.get('title').untouched?'is-danger':''"
+        formControlName="title" #title required>
+    </div>
+    <p class="help is-danger">{{errorMsgTitle}}</p>
+  </div>
+  <div class="field">
+    <div class="control">
+      <textarea class="textarea" rows="4" placeholder="Post tekst hierzo..." [ngClass]="(newPost.get('body').errors)!=null && !newPost.get('body').untouched?'is-danger':''"
+        formControlName="body" required></textarea>
+    </div>
+    <p class="help is-danger">{{errorMsgBody}}</p>
+
+  </div>
+  <div class="field">
+    <div class="control">
+      <button type="submit" class="button is-link">PostIt</button>
+    </div>
+  </div>
+</form>

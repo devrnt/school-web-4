@@ -1,4 +1,0 @@
-/* Validator CSS for Angular  */
-.ng-invalid:not(form) {
-    border-left: 3px solid red !important;
-}

@@ -22,8 +22,6 @@ export class PinboardListComponent implements OnInit {
 
   private _pinboards: Pinboard[];
 
-  private _posts: Post[];
-  
   pinBoards: Observable<Pinboard[]>;
 
   constructor(private _pinboardService: PinboardService) {
@@ -53,17 +51,5 @@ export class PinboardListComponent implements OnInit {
 
   getPinboardByCityName(city: string): Observable<Pinboard> {
     return this._pinboardService.getPinboardFromCityName(city);
-  }
-
-  doSometing(){
-    console.log('Fetched');
-    this._pinboardService.getAllPinboards()
-    .subscribe(pinboards => (this._pinboards = pinboards),
-      (error: HttpErrorResponse) => {
-        this.errorMsg = `Error ${
-          error.status
-          } while trying to retrieve pinboards: ${error.error}`;
-      }
-    );
   }
 }
