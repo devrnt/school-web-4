@@ -18,6 +18,8 @@ export class AddPostComponent implements OnInit {
   public errorMsgBody: string;
 
 
+  succes: boolean;
+
   constructor(private formBuilder: FormBuilder, private _pinboardService: PinboardService) { }
 
   ngOnInit() {
@@ -41,6 +43,7 @@ export class AddPostComponent implements OnInit {
           post => { 
             this.pinboard.addPost(post);
             this.newPost.reset();
+            this.succes = true;
            },
           (error: HttpErrorResponse) => {
             this.errorMsg = `Error ${error.status} while adding post for ${

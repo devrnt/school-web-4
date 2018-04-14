@@ -1,0 +1,10 @@
+<agm-map [latitude]="mapCenterLat" [longitude]="mapCenterLon" [disableDefaultUI]="false">
+  <agm-marker *ngFor="let pinboard of pinboards; let i = index" 
+  [latitude]="pinboard.location.latitude" 
+  [longitude]="pinboard.location.longitude" 
+  (markerClick)="clickedLocation(i)">
+    <agm-info-window>
+      <p><strong><a [routerLink]="['/prikbord', pinboard.city]">{{pinboard.city}}</a></strong><br>Posts: {{pinboard.getAmountOfPosts()}}</p>
+    </agm-info-window>
+  </agm-marker>
+</agm-map>

@@ -21,3 +21,7 @@
     </div>
   </div>
 </form>
+<div *ngIf="succes" class="notification is-warning">
+    <button (click)="succes = false" class="delete"></button>
+    De post is succesvol toegevoegd! <strong>Bekijk hem nu!</strong>
+  </div>
