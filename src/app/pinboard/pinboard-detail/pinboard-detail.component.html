@@ -23,6 +23,14 @@
               <p class="has-text-weight-light">
                 <i class="far fa-calendar-alt"></i>
                 {{post.dateCreated | date}}
+              </p>
+              <p class="has-text-weight-light" (click)="likePost(post.id)">
+                <i class="far fa-heart" *ngIf="!isPostLiked(post.id)"></i>
+                <span class="icon has-text-danger" *ngIf="isPostLiked(post.id)">
+                  <i class="fas fa-heart"></i>
+                </span>
+                {{post.likes}}
+              </p>
             </div>
 
           </div>

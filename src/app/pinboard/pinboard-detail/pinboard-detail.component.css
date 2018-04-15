@@ -5,3 +5,7 @@ svg {
 .subtitle {
     margin-bottom: 40px;
 }
+
+.fa-heart {
+    cursor: pointer;
+}
