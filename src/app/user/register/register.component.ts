@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
   public user: FormGroup;
   public errorMsg: string;
+  private requiredPassLength: number = 8;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,7 +33,7 @@ export class RegisterComponent implements OnInit {
       ],
       passwordGroup: this.formBuilder.group(
         {
-          password: ['', [Validators.required, this.passwordValidator(12)]],
+          password: ['', [Validators.required, this.passwordValidator(this.requiredPassLength)]],
           confirmPassword: ['', Validators.required]
         },
         { validator: this.comparePasswords }
@@ -56,27 +57,42 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    this.authenticationService
-      .register(this.user.value.username, this.passwordControl.value)
-      .subscribe(
-        val => {
-          if (val) {
-            this.router.navigate(['/pinboards']);
+    if (this.user.value.username !== '' && this.passwordControl.value !== ''
+      && this.confirmPasswordControl.value !== '') {
+      this.authenticationService
+        .register(this.user.value.username, this.passwordControl.value)
+        .subscribe(
+          val => {
+            if (val) {
+              this.router.navigate(['/prikbord/alle']);
+            }
+          },
+          (error: HttpErrorResponse) => {
+            this.errorMsg = `Error ${
+              error.status
+              } while trying to register user ${this.user.value.username}: ${
+              error.error
+              }`;
           }
-        },
-        (error: HttpErrorResponse) => {
-          this.errorMsg = `Error ${
-            error.status
-            } while trying to register user ${this.user.value.username}: ${
-            error.error
-            }`;
-        }
-      );
+        );
+    } else {
+      console.log('Goe geprobeerd, ma tzal nie lukken. Refresh maar')
+    }
+
   }
+
+  get usernameControl(): FormControl {
+    return <FormControl>this.user.get('username');
+  }
+
   get passwordControl(): FormControl {
     return <FormControl>this.user.get('passwordGroup').get('password');
   }
 
+  get confirmPasswordControl(): FormControl {
+    return <FormControl>this.user.get('passwordGroup').get('confirmPassword');
+
+  }
 
   passwordValidator(length: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } => {

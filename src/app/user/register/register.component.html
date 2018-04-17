@@ -1,24 +1,83 @@
-<!-- <form [formGroup]="user" (ngSubmit)="onSubmit()">
-  <label for="username">username:</label>
-  <input type="text" id="username" formControlName='username'>
-  <div class='ui pointing red basic label' *ngIf='user.get("username").errors 
-  && user.get("username").touched'>
-    a user with that name already exists
-  </div>
+<div class="container is-small">
+<div class="box">
+  <form [formGroup]="user" (ngSubmit)="onSubmit()">
+    <!-- Username -->
+    <div class="field">
+      <label class="label">Gebruikersnaam</label>
+      <div class="control has-icons-left has-icons-right">
+        <input formControlName="username" class="input" [ngClass]="{
+        'is-danger': usernameControl.errors && user.get('username').dirty,
+        'is-success': !usernameControl.errors
+      }" type="text" placeholder="Gebruikersnaam">
+        <span class="icon is-small is-left">
+          <i class="fas fa-user"></i>
+        </span>
+      </div>
+      <!-- === ERRORS -->
+      <!-- Username is required -->
+      <p *ngIf="usernameControl.hasError('required') && usernameControl?.touched" class="help is-danger">
+        Gebruikersnaam is vereist
+      </p>
+      <p *ngIf="usernameControl.hasError('minlength') && usernameControl?.touched" class="help is-danger">
+        De gebruikersnaam moet minimum 4 karakters lang zijn.
+      </p>
+      <!-- username already taken -->
+      <p *ngIf="usernameControl.hasError('userAlreadyExists') && usernameControl?.touched" class="help is-danger">
+        De gebruikersnaam is al in gebruik
+      </p>
+    </div>
 
-  <div formGroupName='passwordGroup'>
+    <!-- Password -->
+    <div formGroupName="passwordGroup">
+      <div class="field">
+        <label class="label">Wachtwoord</label>
+        <div class="control has-icons-left has-icons-right">
+          <input formControlName="password" class="input" [ngClass]="{
+            'is-danger': passwordControl.errors && passwordControl.dirty,
+            'is-success': !passwordControl.errors
+          }" type="text" placeholder="Wachtwoord">
+          <span class="icon is-small is-left">
+            <i class="fas fa-key"></i>
+          </span>
+        </div>
+      </div>
+      <p *ngIf="passwordControl.hasError('required') && passwordControl?.touched" class="help is-danger">
+        Wachtwoord is vereist
+      </p>
+      <p *ngIf="passwordControl.hasError('passwordTooShort') && !passwordControl.hasError('required') 
+      && passwordControl?.touched" class="help is-danger">
+        Het wachtwoord moet minimum {{passwordControl.errors['passwordTooShort'].requiredLength}} karakters lang zijn.
+      </p>
 
-    <label for="username">password:</label>
+      <div class="field">
+        <label class="label">Bevestig wachtwoord</label>
+        <div class="control has-icons-left has-icons-right">
+          <input formControlName="confirmPassword" class="input" [ngClass]="{
+              'is-danger': user.get('passwordGroup').errors && confirmPasswordControl.dirty,
+              'is-success': user.get('passwordGroup').errors == null && confirmPasswordControl.dirty
+            }" type="text" placeholder="Wachtwoord">
+          <span class="icon is-small is-left">
+            <i class="fas fa-key"></i>
+          </span>
+        </div>
+      </div>
+      <p *ngIf="confirmPasswordControl.hasError('required') && confirmPasswordControl?.touched" class="help is-danger">
+        Bevestig wachtwoord is vereist
+      </p>
+      <p *ngIf="user.get('passwordGroup').hasError('passwordsDiffer') && !confirmPasswordControl.hasError('required') &&
+     confirmPasswordControl?.touched && passwordControl.touched" class="help is-danger">
+        Het wachtwoord komt niet overeen
+      </p>
+    </div>
 
-    <input type="text" id="username" formControlName='password'>
-    <label for="username">confirm password:</label>
-
-    <input type="text" id="username" formControlName='confirmPassword'>
-  </div>
-
-
-  <button type='submit' [disabled]='!user.valid' class="button">register</button>
-  {{user.valid}}
-</form> -->
-
-<p>Register works!</p>
+    <div class="field is-grouped" id="button-group">
+      <div class="control">
+        <button class="button is-link" type="submit" [disabled]="!user.valid">Registreer</button>
+      </div>
+      <div class="control">
+        <button class="button is-text">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>
+</div>
