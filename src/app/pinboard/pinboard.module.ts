@@ -17,6 +17,7 @@ import { PinboardService } from '../services/pinboard.service';
 
 import { httpInterceptorProviders } from '../http-interceptors/index';
 
+import { environment } from '../../environments/environment';
 
 // Google Maps
 import { AgmCoreModule } from '@agm/core';
@@ -39,7 +40,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     // Google Maps
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBJvMuUr1PbYzQ3c5XA1tjrd4Z2hCO7QO8'
+      apiKey: environment.googleMapsApiKey
     })
   ],
   declarations: [
