@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('express-jwt');
 
 const mongoose = require('mongoose');
 let Pinboard = mongoose.model('Pinboard');
 let Post = mongoose.model('Post');
+const auth = jwt({ secret: process.env.BACKEND_SECRET });
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -20,7 +22,7 @@ router.get('/api/pinboards/', (req, res, next) => {
 });
 
 // POST new Pinboard
-router.post('/api/pinboards/', (req, res, next) => {
+router.post('/api/pinboards/', auth, (req, res, next) => {
   Post.create(req.body.posts, function (err, po) {
     if (err) return next(err);
     let pinboard = new Pinboard({

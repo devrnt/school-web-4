@@ -8,9 +8,15 @@ const bodyParser = require('body-parser');
 // Mongoose db
 const mongoose = require('mongoose');
 
+// passport
+const passport = require('passport');
+
 // models 
+require('./models/User');
 require('./models/Pinboard');
 require('./models/Post');
+
+require('./config/passport');
 
 mongoose.connect('mongodb://localhost/pinboardsdb');
 
@@ -20,7 +26,6 @@ const users = require('./routes/users');
 const app = express();
 
 
-
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -28,9 +33,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
 
 app.use('/', index);
-app.use('/users', users);
+app.use('/api/users', users);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

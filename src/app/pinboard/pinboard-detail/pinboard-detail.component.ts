@@ -22,15 +22,20 @@ export class PinboardDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    // display the cityName that was tried to be reached
     this.cityNameFromUrl = this._route.snapshot.paramMap.get('stad');
-    try {
-      this._pinboardService.getPinboardFromCityName(this.cityNameFromUrl)
-        .subscribe(board => {
-          this._pinboard = board;
-        });
-    } catch (err) {
-      console.error(err);
-    }
+    this._route.data.subscribe(item => {
+      this._pinboard = item['pinboard'];
+    })
+    // this.cityNameFromUrl = this._route.snapshot.paramMap.get('stad');
+    // try {
+    //   this._pinboardService.getPinboardFromCityName(this.cityNameFromUrl)
+    //     .subscribe(board => {
+    //       this._pinboard = board;
+    //     });
+    // } catch (err) {
+    //   console.error(err);
+    // }
     // temp
     this.writeLikesPostsInLocalStorage();
   }
