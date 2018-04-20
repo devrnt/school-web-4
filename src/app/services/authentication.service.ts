@@ -14,6 +14,8 @@ export class AuthenticationService {
 
   private readonly _httpUrl = '/api/users';
 
+  // Set the amount of minutes when a token should expire
+  private readonly _minutes = 10;
 
   private readonly _tokenKey = 'currentUser';
   private _user$: BehaviorSubject<string>;
@@ -22,9 +24,14 @@ export class AuthenticationService {
 
 
   constructor(private http: HttpClient) {
+
     let parsedToken = this.parseJWT(localStorage.getItem(this._tokenKey));
+
     if (parsedToken) {
-      const expires = new Date(parseInt(parsedToken.exp, 10) * 1000) < new Date();
+      const expiresFromToken = new Date(parseInt(parsedToken.exp, 10) * 1000);
+
+      const max = new Date(expiresFromToken.getTime() + this._minutes * 60000);
+      const expires = max < new Date();
       if (expires) {
         localStorage.removeItem(this._tokenKey);
         parsedToken = null;
@@ -34,7 +41,7 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string): Observable<boolean> {
-    return this.http.post(`${this._httpUrl}/users/login`, { username, password }).pipe(
+    return this.http.post(`${this._httpUrl}/login`, { username, password }).pipe(
       map((res: any) => {
         const token = res.token;
         if (token) {

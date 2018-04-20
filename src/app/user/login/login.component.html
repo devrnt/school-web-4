@@ -1,4 +1,36 @@
-<p>
-  login works!
-</p>
-<button routerLink="/register">No account?</button>
+<div *ngIf="errorMsg" class="help is-danger">{{errorMsg}}</div>
+<div class="container is-small">
+  <div class="box">
+    <form [formGroup]="user" (ngSubmit)="onSubmit()">
+      <!-- Username -->
+      <div class="field">
+        <label class="label">Gebruikersnaam</label>
+        <div class="control has-icons-left has-icons-right">
+          <input formControlName="username" class="input" type="text" placeholder="Gebruikersnaam">
+          <span class="icon is-small is-left">
+            <i class="fas fa-user"></i>
+          </span>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="field">
+        <label class="label">Wachtwoord</label>
+        <div class="control has-icons-left has-icons-right">
+          <input formControlName="password" class="input" type="text" placeholder="Wachtwoord">
+          <span class="icon is-small is-left">
+            <i class="fas fa-key"></i>
+          </span>
+        </div>
+      </div>
+
+      <div class="field is-grouped" id="button-group">
+        <div class="control">
+          <button class="button is-link" type="submit" [disabled]="!user.valid">Login</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<button routerLink="/register" class="button is-help">No account?</button>

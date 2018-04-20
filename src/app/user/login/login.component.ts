@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -26,16 +27,32 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.authenticationService.login(this.user.value.username,
-      this.user.value.password).subscribe(val => {
+    this.authenticationService
+      .login(this.user.value.username, this.user.value.password)
+      .subscribe(val => {
         if (val) {
           if (this.authenticationService.redirectUrl) {
             this.router.navigateByUrl(this.authenticationService.redirectUrl);
             this.authenticationService.redirectUrl = undefined;
           } else {
-            this.router.navigate(['/recipe/list']);
+            this.router.navigate(['/prikbord/alle']);
           }
+        } else {
+          this.errorMsg = `Could not login`;
         }
-      }, err => this.errorMsg = err.json().message);
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          this.errorMsg = `Error while trying to login user ${
+            this.user.value.username
+          }: ${err.error.message}`;
+        } else {
+          this.errorMsg = `Error ${err.status} while trying to login user ${
+            this.user.value.username 
+          }: ${err.error}`;
+          console.log(err.error)
+        }
+      }
+    )
   }
 }
