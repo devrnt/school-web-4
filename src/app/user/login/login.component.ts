@@ -41,18 +41,19 @@ export class LoginComponent implements OnInit {
           this.errorMsg = `Could not login`;
         }
       },
-      (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          this.errorMsg = `Error while trying to login user ${
-            this.user.value.username
-          }: ${err.error.message}`;
-        } else {
-          this.errorMsg = `Error ${err.status} while trying to login user ${
-            this.user.value.username 
-          }: ${err.error}`;
-          console.log(err.error)
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            this.errorMsg = `Error while trying to login user ${
+              this.user.value.username
+              }: ${err.error.message}`;
+          } else {
+            // DEV
+            // this.errorMsg = `Error ${err.status} while trying to login user ${
+            //   this.user.value.username 
+            // }: ${err.error}`;
+            this.errorMsg = `Kon niet inloggen, ${err.error.message}`;
+          }
         }
-      }
-    )
+      )
   }
 }
