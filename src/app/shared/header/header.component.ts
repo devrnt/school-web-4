@@ -7,7 +7,7 @@ import { AuthenticationService } from '../../services/authentication.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  private _currentUser: string;
+  private _currentUser: any;
 
   public dropDown: boolean;
 
@@ -15,14 +15,11 @@ export class HeaderComponent implements OnInit {
     this.authenticationService.user$.subscribe(user => this._currentUser = user);
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   toggleMenu(): void {
-    console.log('hey')
     // Get all "navbar-burger" elements
     const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-    console.log($navbarBurgers);
 
     // Check if there are any navbar burgers
     if ($navbarBurgers.length > 0) {
@@ -42,8 +39,12 @@ export class HeaderComponent implements OnInit {
 
   }
 
-  get currentUser(): string {
+  get currentUser(): any {
     return this._currentUser;
+  }
+
+  get currentUsername(): string {
+    return this._currentUser.username;
   }
 
   toggleDropDown() {

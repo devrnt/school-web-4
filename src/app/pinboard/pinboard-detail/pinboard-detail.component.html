@@ -25,10 +25,14 @@
                 {{post.dateCreated | date}}
               </p>
               <p class="has-text-weight-light" (click)="likePost(post.id)">
-                <i class="far fa-heart" *ngIf="!isPostLiked(post.id)"></i>
-                <span class="icon has-text-danger" *ngIf="isPostLiked(post.id)">
-                  <i class="fas fa-heart"></i>
+                <span *ngIf="!isPostLiked(post.id)">
+                  <i class="far fa-heart" *ngIf="!isPostLiked(post.id)"></i>
                 </span>
+                <span class="icon has-text-danger" *ngIf="isPostLiked(post.id)">
+                  <i class="fas fa-heart" *ngIf="isPostLiked(post.id)"></i>
+                </span>
+                <!-- <span class="is-pulled-right" *ngIf="liked"><b>+1</b></span> -->
+
                 {{post.likes}}
               </p>
             </div>

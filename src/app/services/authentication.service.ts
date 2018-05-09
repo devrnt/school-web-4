@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/observable';
 import 'rxjs/add/operator/map';
 
 import { catchError, map, tap, filter } from 'rxjs/operators';
+import { Post } from '../models/post.model';
 
 
 @Injectable()
@@ -18,10 +19,15 @@ export class AuthenticationService {
   private readonly _minutes = 10;
 
   private readonly _tokenKey = 'currentUser';
-  private _user$: BehaviorSubject<string>;
+  private readonly _likedPostsKey = 'likedPosts';
+
+
+  private _user$: BehaviorSubject<any>;
+
+
+  likedPosts: any;
 
   public redirectUrl: string;
-
 
   constructor(private http: HttpClient) {
 
@@ -34,10 +40,18 @@ export class AuthenticationService {
       const expires = max < new Date();
       if (expires) {
         localStorage.removeItem(this._tokenKey);
+        localStorage.removeItem(this._likedPostsKey);
         parsedToken = null;
       }
     }
-    this._user$ = new BehaviorSubject<string>(parsedToken && parsedToken.username);
+    this._user$ = new BehaviorSubject<any>(parsedToken);
+
+    let posts;
+    if (parsedToken) {
+      this._user$.subscribe(user => posts = user.likedPosts);
+      localStorage.setItem(this._likedPostsKey, JSON.stringify(posts));
+      console.log('van auth');
+    }
   }
 
   login(username: string, password: string): Observable<boolean> {
@@ -46,7 +60,14 @@ export class AuthenticationService {
         const token = res.token;
         if (token) {
           localStorage.setItem(this._tokenKey, token);
-          this._user$.next(username);
+          let parsedToken = this.parseJWT(token);
+          this._user$.next(parsedToken);
+          let user;
+          user = this._user$.subscribe(usr => user = usr.username);
+          let posts;
+          this._user$.subscribe(user => posts = user.likedPosts);
+          localStorage.setItem(this._likedPostsKey, JSON.stringify(posts));
+          this.likedPosts = this.getLikedPosts(user);
           return true;
         } else {
           return false;
@@ -89,13 +110,32 @@ export class AuthenticationService {
     );
   }
 
+  likePost(postId: string): Observable<Post[]> {
+    console.log('got from the like ' + postId);
+    return this.http.post(`${this._httpUrl}/likePost`, { 'username': 'jonas', 'postId': postId }).pipe(
+      map((list: any[]): Post[] =>
+        list.map(Post.fromJSON)
+      )
+    )
+  }
+
   get token(): string {
     const localToken = localStorage.getItem(this._tokenKey);
     return !!localToken ? localToken : '';
   }
 
-  get user$(): BehaviorSubject<string> {
+  get user$(): BehaviorSubject<any> {
     return this._user$;
+  }
+
+  getLikedPosts(username: string): Observable<Post[]> {
+    let currentUser;
+    this._user$.subscribe(user => currentUser = user.username);
+    return this.http.post(`${this._httpUrl}/likedPosts`, { 'username': username }).pipe(
+      map((list: any[]): Post[] =>
+        list.map(Post.fromJSON)
+      )
+    )
   }
 
   parseJWT(token) {

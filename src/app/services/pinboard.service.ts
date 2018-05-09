@@ -54,17 +54,9 @@ export class PinboardService {
       });
   }
 
+  // This is not exactly a PinboardService method, 
+  // but I keep it here for now
 
-
-  // getByCityName(cityName: string): Observable<Pinboard> {
-  //   let foundPinboard = this.getPinboardsHttp()
-  //     .map(pinboards => pinboards.find(pinboard => pinboard.city.toLocaleLowerCase() === cityName.toLocaleLowerCase()));
-  //   if (foundPinboard != undefined) {
-  //     return foundPinboard;
-  //   } else {
-  //     throw new Error('Geen borden in deze stad!');
-  //   }
-  // }
 
 
 
