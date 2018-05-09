@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-// const exp = require('express-jwt');
 
 let UserSchema = new mongoose.Schema({
     username: {
@@ -10,7 +9,8 @@ let UserSchema = new mongoose.Schema({
         unique: true
     },
     hash: String,
-    salt: String
+    salt: String,
+    likedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }]
 });
 
 UserSchema.methods.setPassword = function (password) {
@@ -29,6 +29,7 @@ UserSchema.methods.generateJWT = function () {
         _id: this._id,
         username: this.username,
         exp: parseInt(exp.getTime() / 1000),
+        likedPosts: this.likedPosts
     }, process.env.BACKEND_SECRET);
 }
 
