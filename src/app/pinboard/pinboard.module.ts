@@ -9,6 +9,7 @@ import { PinboardListComponent } from './pinboard-list/pinboard-list.component';
 import { PinboardDetailComponent } from './pinboard-detail/pinboard-detail.component';
 import { PinboardMapsComponent } from './pinboard-maps/pinboard-maps.component';
 import { AddPostComponent } from '../post/add-post/add-post.component';
+import { PostComponent } from '../post/post/post.component';
 
 import { PinboardFilterPipe } from './pinboard-list/pinboard-filter.pipe';
 
@@ -48,7 +49,8 @@ const routes: Routes = [
     PinboardDetailComponent,
     PinboardMapsComponent,
     PinboardFilterPipe,
-    AddPostComponent
+    AddPostComponent,
+    PostComponent
   ],
   providers: [httpInterceptorProviders, PinboardService, PinboardResolver]
 
