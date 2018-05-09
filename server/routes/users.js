@@ -63,6 +63,8 @@ router.post('/likedPosts', function (req, res, next) {
   });
 });
 
+
+// in fact we could merge like and dislike function
 router.post('/likePost', function (req, res, next) {
   let queryFindUser = User.findOne({ username: req.body.username }).populate('likedPosts');
   queryFindUser.exec(function (err, user) {
@@ -75,41 +77,36 @@ router.post('/likePost', function (req, res, next) {
       if (err) return next(err);
       if (!post) return next(new Error(`Post with id ${req.body.postId} is not found`));
       // no check if post is already in likedPosts 
-      console.log(post)
       usr.likedPosts.push(post);
-      console.log(usr.likedPosts);
       usr.save(function (err) {
         if (err) return next(err);
         return res.json(usr.likedPosts);
       });
     })
-
   });
 });
 
-// router.post('/unLikePost', function (req, res, next) {
-//   let queryFindUser = User.findOneAndUpdate({ username: req.body.username }).populate('likedPosts');
-//   queryFindUser.exec(function (err, user) {
-//     if (err) return next(err);
-//     if (!user) return next(new Error(`User with username ${req.body.username} not found`));
-//     let usr = user;
+router.post('/unLikePost', function (req, res, next) {
+  let queryFindUser = User.findOne({ username: req.body.username }).populate('likedPosts');
+  queryFindUser.exec(function (err, user) {
+    if (err) return next(err);
+    if (!user) return next(new Error(`User with username ${req.body.username} not found`));
+    let usr = user;
 
-//     let queryFindPost = Post.findOneAndUpdate(req.body.postId, { $inc: { likes: -1 } });
-//     queryFindPost.exec(function (err, post) {
-//       if (err) return next(err);
-//       if (!post) return next(new Error(`Post with id ${req.body.postId} is not found`));
-//       // no check if post is already in likedPosts 
-//       let idk = User.update({ username: req.body.username }, { $pull: { likedPosts: post } });
-//       idk.exec(function(err, updatedUser){
-//         if (err) return next(err);
-//         let updatedUser = up
-//       })
-//       usr.save(function (err) {
-//         if (err) return next(err);
-//         return res.json(usr.likedPosts);
-//       });
-//     })
-
-//   });
-// });
+    let queryFindPost = Post.findByIdAndUpdate(req.body.postId, { $inc: { likes: -1 } });
+    queryFindPost.exec(function (err, post) {
+      if (err) return next(err);
+      if (!post) return next(new Error(`Post with id ${req.body.postId} is not found`));
+      // no check if post is already in likedPosts 
+      console.log(post);
+      let userRemovePostQuery = User.update({ username: req.body.username }, { $pull: { likedPosts: post.id } });
+      userRemovePostQuery.exec(function(err, updatedUser){
+        if (err) return next(err);
+      
+          return res.json(usr.likedPosts);
+        
+      });
+    });
+  });
+});
 module.exports = router;

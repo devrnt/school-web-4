@@ -53,9 +53,13 @@ export class PinboardDetailComponent implements OnInit {
     // in prod check if user already has this post liked
     if (this.isPostLiked(postId)) {
       // dislike
-      console.log('dislike this post')
+      this._authenticationService.unlikePost(postId).subscribe(posts => console.log(posts));
+
+      let newPostArr = JSON.parse(localStorage.getItem(this._likedPostsKey));
+      newPostArr = newPostArr.filter(post => post !== postId)
+      localStorage.setItem(this._likedPostsKey, JSON.stringify(newPostArr));
+      this.liked = false;
     } else {
-      console.log('like this post')
       this._authenticationService.likePost(postId).subscribe(likedPosts => this._likedPosts = likedPosts);
 
       let newPostArr = JSON.parse(localStorage.getItem(this._likedPostsKey));

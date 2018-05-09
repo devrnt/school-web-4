@@ -111,8 +111,16 @@ export class AuthenticationService {
   }
 
   likePost(postId: string): Observable<Post[]> {
-    console.log('got from the like ' + postId);
     return this.http.post(`${this._httpUrl}/likePost`, { 'username': 'jonas', 'postId': postId }).pipe(
+      map((list: any[]): Post[] =>
+        list.map(Post.fromJSON)
+      )
+    )
+  }
+
+  // this naming is actually sh*
+  unlikePost(postId: string): Observable<Post[]>{
+    return this.http.post(`${this._httpUrl}/unLikePost`, { 'username': 'jonas', 'postId': postId }).pipe(
       map((list: any[]): Post[] =>
         list.map(Post.fromJSON)
       )

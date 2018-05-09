@@ -9,3 +9,8 @@ svg {
 .fa-heart {
     cursor: pointer;
 }
+
+span {
+    padding: 0;
+    margin: 0;
+}
