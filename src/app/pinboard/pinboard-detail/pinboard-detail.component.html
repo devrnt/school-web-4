@@ -13,32 +13,7 @@
     <!-- display all the posts of the pinboard -->
     <div class="columns is-multiline">
       <div *ngFor="let post of pinboard.posts" class="column is-one-quarter">
-        <div class="card">
-          <div class="card-header">
-            <p class="card-header-title">{{post.title}}</p>
-          </div>
-          <div class="card-content">
-            <div class="content">
-              <p>{{post.body}}</p>
-              <p class="has-text-weight-light">
-                <i class="far fa-calendar-alt"></i>
-                {{post.dateCreated | date}}
-              </p>
-              <p class="has-text-weight-light" (click)="likePost(post.id)">
-                <span class="icon" *ngIf="!isPostLiked(post.id)">
-                  <i class="far fa-heart" *ngIf="!isPostLiked(post.id)"></i>
-                </span>
-                <span class="icon has-text-danger" *ngIf="isPostLiked(post.id)">
-                  <i class="fas fa-heart" *ngIf="isPostLiked(post.id)"></i>
-                </span>
-                <!-- <span class="is-pulled-right" *ngIf="liked"><b>+1</b></span> -->
-
-                {{post.likes}}
-              </p>
-            </div>
-
-          </div>
-        </div>
+        <post [post]="post"></post>
       </div>
     </div>
   </div>

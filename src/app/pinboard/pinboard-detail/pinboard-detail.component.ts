@@ -28,8 +28,8 @@ export class PinboardDetailComponent implements OnInit {
   constructor(private _route: ActivatedRoute,
     private _pinboardService: PinboardService,
     private _authenticationService: AuthenticationService) {
-    localStorage.removeItem(this._likedPostsKey);
 
+    localStorage.removeItem(this._likedPostsKey);
   }
 
   ngOnInit() {
@@ -41,44 +41,10 @@ export class PinboardDetailComponent implements OnInit {
     this._authenticationService.getLikedPosts("jonas").subscribe(po => {
       let idArrayOfLikedPosts = po.map(pst => pst.id);
       localStorage.setItem(this._likedPostsKey, JSON.stringify(idArrayOfLikedPosts));
-
     });
   }
 
   get pinboard(): Pinboard {
     return this._pinboard;
-  }
-
-  likePost(postId: string) {
-    // in prod check if user already has this post liked
-    if (this.isPostLiked(postId)) {
-      // dislike
-      this._authenticationService.unlikePost(postId).subscribe(posts => console.log(posts));
-
-      let newPostArr = JSON.parse(localStorage.getItem(this._likedPostsKey));
-      newPostArr = newPostArr.filter(post => post !== postId)
-      localStorage.setItem(this._likedPostsKey, JSON.stringify(newPostArr));
-      this.liked = false;
-    } else {
-      this._authenticationService.likePost(postId).subscribe(likedPosts => this._likedPosts = likedPosts);
-
-      let newPostArr = JSON.parse(localStorage.getItem(this._likedPostsKey));
-      newPostArr.push(postId);
-
-      localStorage.setItem(this._likedPostsKey, JSON.stringify(newPostArr));
-      this.liked = true;
-
-      // this._authenticationService.user$.subscribe(user => console.log('Hierphoi' + JSON.stringify(user)));
-      // let posts = JSON.parse(localStorage.getItem('postIds'));
-      // posts.push(postId);
-      // console.log('jdidnidj' + posts);
-
-      // service like the post  
-      // increment amount of likes of post
-    }
-  }
-
-  isPostLiked(postId: string): boolean {    
-    return JSON.parse(localStorage.getItem(this._likedPostsKey)).includes(postId);
   }
 }
