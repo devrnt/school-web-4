@@ -50,6 +50,14 @@ export class Post {
     }
 
     set likes(amount: number) {
-        this.likes++;
+        this._likes = amount;
+    }
+
+    addLike() {
+        this._likes++;
+    }
+
+    removeLike(){
+        this._likes--;
     }
 }
