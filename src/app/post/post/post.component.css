@@ -18,3 +18,7 @@ span {
     user-select: none;
 
 }
+
+.body-text {
+    white-space: pre-wrap;
+}

@@ -32,7 +32,12 @@
     <div *ngFor="let pinboard of pinboards | pinboardFilter:filterPinboardName" class="column is-one-quarter">
       <div class="card">
         <div class="card-header">
-          <p class="card-header-title ">{{pinboard.city}}</p>
+            
+          <p class="card-header-title "><span class="icon">
+              <i class="fas fa-map-marker has-text-grey is-pulled-right"></i>
+            </span> {{pinboard.city}}
+          
+          </p>
         </div>
         <div class="card-content">
           <div class="content">
@@ -42,8 +47,8 @@
         </div>
       </div>
     </div>
-    <div class="section">
-      <p *ngIf="(pinboards | pinboardFilter:filterPinboardName).length==0" id="noResults">
+    <div class="section" *ngIf="(pinboards | pinboardFilter:filterPinboardName) && (pinboards | pinboardFilter:filterPinboardName).length==0">
+      <p id="noResults">
         <b>Geen borden gevonden.</b> Wijzig de filter!
       </p>
     </div>
@@ -51,5 +56,12 @@
 </section>
 <hr>
 <section class="section">
+  <h3 class="title is-3">
+    Zoek uw stad!
+  </h3>
+  <h5 class="subtitle is-5">
+    Op deze map staan alle prikborden, klik erop!
+    <br>
+  </h5>
   <app-pinboard-maps [pinboards]="pinboards"></app-pinboard-maps>
 </section>

@@ -14,13 +14,13 @@
       <a routerLink="/prikbord/alle" routerLinkActive="active-link" class="navbar-item">Prikbordenlijst</a>
     </div>
     <div class="navbar-end">
-      <a *ngIf="!currentUser" routerLink="/login" class="navbar-item">Login</a>
+      <a *ngIf="!currentUser" routerLink="/login" class="navbar-item">LOGIN</a>
       <div *ngIf="currentUser" class="dropdown is-transparent" (click)="toggleDropDown()" [ngClass]="{
         'is-active': dropDown
       }">
         <div class="dropdown-trigger">
           <button class="button has-text-white btn" aria-haspopup="true" aria-controls="dropdown-menu">
-            <span class="has-text-black">Hallo {{currentUsername}}!</span>
+            <span class="has-text-black">Hallo {{currentUser.username}}!</span>
             <span class="icon is-small">
               <i class="fas fa-angle-down" aria-hidden="true"></i>
             </span>
@@ -28,8 +28,7 @@
         </div>
         <div class="dropdown-menu" id="dropdown-menu" role="menu">
           <div class="dropdown-content">
-            <a class="dropdown-item" routerLink="/logout">Logout
-            </a>
+            <a class="dropdown-item" routerLink="/logout">Logout</a>
           </div>
         </div>
       </div>

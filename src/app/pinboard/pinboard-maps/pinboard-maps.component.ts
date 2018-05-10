@@ -20,7 +20,6 @@ export class PinboardMapsComponent implements OnInit {
   }
   clickedLocation(index: Number){
     // eventueel verder iets met doen
-    console.log(`Index ${index}`)
   }
 
 

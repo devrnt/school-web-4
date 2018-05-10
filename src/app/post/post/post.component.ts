@@ -26,7 +26,7 @@ export class PostComponent implements OnInit {
     // in prod check if user already has this post liked
     if (this.isPostLiked(postId)) {
       // dislike
-      this._authenticationService.unlikePost(postId).subscribe(posts => console.log(posts));
+      this._authenticationService.unlikePost(postId).subscribe();
 
       let newPostArr = JSON.parse(localStorage.getItem(this._likedPostsKey));
       newPostArr = newPostArr.filter(post => post !== postId)
@@ -34,7 +34,8 @@ export class PostComponent implements OnInit {
       this.liked = false;
       this.post.removeLike();
     } else {
-      this._authenticationService.likePost(postId).subscribe(likedPosts => console.log(likedPosts));
+      // use this return array to write to localStorage
+      this._authenticationService.likePost(postId).subscribe();
 
       let newPostArr = JSON.parse(localStorage.getItem(this._likedPostsKey));
       newPostArr.push(postId);
@@ -42,19 +43,14 @@ export class PostComponent implements OnInit {
       localStorage.setItem(this._likedPostsKey, JSON.stringify(newPostArr));
       this.liked = true;
       this.post.addLike();
-
-      // this._authenticationService.user$.subscribe(user => console.log('Hierphoi' + JSON.stringify(user)));
-      // let posts = JSON.parse(localStorage.getItem('postIds'));
-      // posts.push(postId);
-      // console.log('jdidnidj' + posts);
-
-      // service like the post  
-      // increment amount of likes of post
     }
   }
 
   isPostLiked(postId: string): boolean {
-    return JSON.parse(localStorage.getItem(this._likedPostsKey)).includes(postId);
+    // wait for this to read otherwise it is null
+    if (JSON.parse(localStorage.getItem(this._likedPostsKey))) {
+      return JSON.parse(localStorage.getItem(this._likedPostsKey)).includes(postId);
+    }
   }
 
 }

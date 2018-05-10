@@ -28,8 +28,6 @@ export class PinboardDetailComponent implements OnInit {
   constructor(private _route: ActivatedRoute,
     private _pinboardService: PinboardService,
     private _authenticationService: AuthenticationService) {
-
-    localStorage.removeItem(this._likedPostsKey);
   }
 
   ngOnInit() {
@@ -37,15 +35,22 @@ export class PinboardDetailComponent implements OnInit {
     this._route.data.subscribe(item => {
       this._pinboard = item['pinboard'];
     });
-    let posts = [];
-    let username = this._authenticationService.user$.getValue().username;
-    this._authenticationService.getLikedPosts(username).subscribe(po => {
-      let idArrayOfLikedPosts = po.map(pst => pst.id);
-      localStorage.setItem(this._likedPostsKey, JSON.stringify(idArrayOfLikedPosts));
+    // get username of currently logged in user
+    const username = this._authenticationService.user$.getValue().username;
+
+    this._authenticationService.getLikedPosts(username).subscribe(likedPosts => {
+      // get the id's of the likedposts
+      const dataForStorage = likedPosts.map(post => post.id);
+      this.writeToLocalStorage(dataForStorage);
     });
   }
 
   get pinboard(): Pinboard {
     return this._pinboard;
+  }
+
+  writeToLocalStorage(likedPosts: any) {
+    localStorage.removeItem(this._likedPostsKey);
+    localStorage.setItem(this._likedPostsKey, JSON.stringify(likedPosts));
   }
 }

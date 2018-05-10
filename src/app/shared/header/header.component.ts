@@ -43,10 +43,6 @@ export class HeaderComponent implements OnInit {
     return this._currentUser;
   }
 
-  get currentUsername(): string {
-    return this._currentUser.username;
-  }
-
   toggleDropDown() {
     this.dropDown = !this.dropDown;
   }

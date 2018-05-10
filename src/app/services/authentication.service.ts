@@ -16,21 +16,16 @@ export class AuthenticationService {
   private readonly _httpUrl = '/api/users';
 
   // Set the amount of minutes when a token should expire
-  private readonly _minutes = 10;
+  private readonly _minutes = 20;
 
   private readonly _tokenKey = 'currentUser';
   private readonly _likedPostsKey = 'likedPosts';
 
-
   private _user$: BehaviorSubject<any>;
-
-
-  likedPosts: any;
 
   public redirectUrl: string;
 
   constructor(private http: HttpClient) {
-
     let parsedToken = this.parseJWT(localStorage.getItem(this._tokenKey));
 
     if (parsedToken) {
@@ -39,8 +34,7 @@ export class AuthenticationService {
       const max = new Date(expiresFromToken.getTime() + this._minutes * 60000);
       const expires = max < new Date();
       if (expires) {
-        localStorage.removeItem(this._tokenKey);
-        localStorage.removeItem(this._likedPostsKey);
+        localStorage.clear();
         parsedToken = null;
       }
     }
@@ -49,8 +43,7 @@ export class AuthenticationService {
     let posts;
     if (parsedToken) {
       this._user$.subscribe(user => posts = user.likedPosts);
-      localStorage.setItem(this._likedPostsKey, JSON.stringify(posts));
-      console.log('van auth');
+      this.writeToLocalStorage(posts);
     }
   }
 
@@ -62,11 +55,7 @@ export class AuthenticationService {
           localStorage.setItem(this._tokenKey, token);
           let parsedToken = this.parseJWT(token);
           this._user$.next(parsedToken);
-          let user = this._user$.getValue().username;
-          let posts;
-          this._user$.subscribe(user => posts = user.likedPosts);
-          localStorage.setItem(this._likedPostsKey, JSON.stringify(posts));
-          this.likedPosts = this.getLikedPosts(user);
+
           return true;
         } else {
           return false;
@@ -81,7 +70,9 @@ export class AuthenticationService {
         const token = res.token;
         if (token) {
           localStorage.setItem(this._tokenKey, token);
-          this._user$.next(username);
+          let parsedToken = this.parseJWT(token);
+          this._user$.next(parsedToken);
+          
           return true;
         } else {
           return false;
@@ -91,10 +82,10 @@ export class AuthenticationService {
   }
 
   logout() {
-    if (this._user$.getValue()) {
+    if (this.user$.getValue()) {
       localStorage.removeItem(this._tokenKey);
-      localStorage.removeItem(this._likedPostsKey)
-      setTimeout(() => this._user$.next(null));
+      localStorage.removeItem(this._likedPostsKey);
+      setTimeout(() => this._user$.next(null), 100);
     }
   }
 
@@ -143,6 +134,11 @@ export class AuthenticationService {
         list.map(Post.fromJSON)
       )
     )
+  }
+
+  writeToLocalStorage(likedPosts: any) {
+    localStorage.removeItem(this._likedPostsKey);
+    localStorage.setItem(this._likedPostsKey, JSON.stringify(likedPosts));
   }
 
   parseJWT(token) {
