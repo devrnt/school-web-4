@@ -8,7 +8,7 @@
   </h5>
   <p>
     Staat uw stad of gemeente nog niet tussen de lijst? Neem gerust
-    <a href="#" class="link">contact</a> op en uw lokaal prikbord wordt zo snel mogelijk toegevoegd.
+    <a href="mailto:devrient.jonas@gmail.com" class="link">contact</a> op en uw lokaal prikbord wordt zo snel mogelijk toegevoegd.
   </p>
 
   <div *ngIf='errorMsg' class="notification is-danger">
@@ -18,7 +18,7 @@
 
 
   <!-- Search filter -->
-  <div class="field has-addons has-addons-right">
+  <div class="field has-addons has-addons-right" id="filterInput">
     <p class="control has-icons-left">
       <input (keyup)="filterPinboard$.next($event.target.value)" class="input" type="text" id="filter" name="filter" placeholder="Zoek naar een stad...">
       <span class="icon is-small is-left">
@@ -41,6 +41,11 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="section">
+      <p *ngIf="(pinboards | pinboardFilter:filterPinboardName).length==0" id="noResults">
+        <b>Geen borden gevonden.</b> Wijzig de filter!
+      </p>
     </div>
   </div>
 </section>
