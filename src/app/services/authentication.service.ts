@@ -62,8 +62,7 @@ export class AuthenticationService {
           localStorage.setItem(this._tokenKey, token);
           let parsedToken = this.parseJWT(token);
           this._user$.next(parsedToken);
-          let user;
-          user = this._user$.subscribe(usr => user = usr.username);
+          let user = this._user$.getValue().username;
           let posts;
           this._user$.subscribe(user => posts = user.likedPosts);
           localStorage.setItem(this._likedPostsKey, JSON.stringify(posts));
@@ -93,7 +92,8 @@ export class AuthenticationService {
 
   logout() {
     if (this._user$.getValue()) {
-      localStorage.removeItem('currentUser');
+      localStorage.removeItem(this._tokenKey);
+      localStorage.removeItem(this._likedPostsKey)
       setTimeout(() => this._user$.next(null));
     }
   }
@@ -111,7 +111,8 @@ export class AuthenticationService {
   }
 
   likePost(postId: string): Observable<Post[]> {
-    return this.http.post(`${this._httpUrl}/likePost`, { 'username': 'jonas', 'postId': postId }).pipe(
+    let username = this._user$.getValue().username;
+    return this.http.post(`${this._httpUrl}/likePost`, { username, postId }).pipe(
       map((list: any[]): Post[] =>
         list.map(Post.fromJSON)
       )
@@ -119,8 +120,9 @@ export class AuthenticationService {
   }
 
   // this naming is actually sh*
-  unlikePost(postId: string): Observable<Post[]>{
-    return this.http.post(`${this._httpUrl}/unLikePost`, { 'username': 'jonas', 'postId': postId }).pipe(
+  unlikePost(postId: string): Observable<Post[]> {
+    let username = this._user$.getValue().username;
+    return this.http.post(`${this._httpUrl}/unLikePost`, { username, postId }).pipe(
       map((list: any[]): Post[] =>
         list.map(Post.fromJSON)
       )
@@ -135,11 +137,8 @@ export class AuthenticationService {
   get user$(): BehaviorSubject<any> {
     return this._user$;
   }
-
   getLikedPosts(username: string): Observable<Post[]> {
-    let currentUser;
-    this._user$.subscribe(user => currentUser = user.username);
-    return this.http.post(`${this._httpUrl}/likedPosts`, { 'username': username }).pipe(
+    return this.http.post(`${this._httpUrl}/likedPosts`, { username }).pipe(
       map((list: any[]): Post[] =>
         list.map(Post.fromJSON)
       )

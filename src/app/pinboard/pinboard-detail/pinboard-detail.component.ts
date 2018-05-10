@@ -38,7 +38,8 @@ export class PinboardDetailComponent implements OnInit {
       this._pinboard = item['pinboard'];
     });
     let posts = [];
-    this._authenticationService.getLikedPosts("jonas").subscribe(po => {
+    let username = this._authenticationService.user$.getValue().username;
+    this._authenticationService.getLikedPosts(username).subscribe(po => {
       let idArrayOfLikedPosts = po.map(pst => pst.id);
       localStorage.setItem(this._likedPostsKey, JSON.stringify(idArrayOfLikedPosts));
     });
