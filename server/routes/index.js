@@ -80,21 +80,5 @@ router.post('/api/pinboard/:pinboard/posts', function (req, res, next) {
   });
 });
 
-// router.post('/api/like/:post', function (req, res, next) {
-//   let post = new Post(Post.findById(req.body.post));
-//   console.log(post);
-//   console.log(`likes before the post ${post.likes}`)
-//   post.save(function (err, post) {
-//     if (err) return next(err);
-//     post.likes++;
-//     post.save(function (err, req) {
-//       if (err) return next(err);
-//       res.json(post);
-//       console.log(`after the post ${post.likes}`)
-//     })
-//   })
-// });
-
-
 
 module.exports = router;

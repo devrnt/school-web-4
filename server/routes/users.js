@@ -52,9 +52,7 @@ router.post('/checkusername', function (req, res, next) {
     });
 });
 
-router.post('/likedPosts', function (req, res, next) {
-  console.log('+====== '+ req.body.username);
-  
+router.post('/likedPosts', function (req, res, next) {  
   let query = User.findOne({ username: req.body.username }).populate('likedPosts');
   query.exec(function (err, user) {
     if (err) return next(err);
@@ -98,7 +96,6 @@ router.post('/unLikePost', function (req, res, next) {
       if (err) return next(err);
       if (!post) return next(new Error(`Post with id ${req.body.postId} is not found`));
       // no check if post is already in likedPosts 
-      console.log(post);
       let userRemovePostQuery = User.update({ username: req.body.username }, { $pull: { likedPosts: post.id } });
       userRemovePostQuery.exec(function(err, updatedUser){
         if (err) return next(err);
