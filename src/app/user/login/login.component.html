@@ -1,36 +1,50 @@
-<div class="container is-small">
-  <div class="box">
-    <form [formGroup]="user" (ngSubmit)="onSubmit()">
-      <!-- Username -->
-      <div class="field">
-        <label class="label">Gebruikersnaam</label>
-        <div class="control has-icons-left has-icons-right">
-          <input formControlName="username" class="input" type="text" placeholder="Gebruikersnaam">
-          <span class="icon is-small is-left">
-            <i class="fas fa-user"></i>
-          </span>
-        </div>
+<div class="columns">
+  <div class="column is-two-thirds">
+    <div class="container is-fluid">
+      <div class="box">
+        <form [formGroup]="user" (ngSubmit)="onSubmit()">
+          <!-- Username -->
+          <div class="field">
+            <label class="label">Gebruikersnaam</label>
+            <div class="control has-icons-left has-icons-right">
+              <input formControlName="username" class="input" type="text" placeholder="Gebruikersnaam">
+              <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+              </span>
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="field">
+            <label class="label">Wachtwoord</label>
+            <div class="control has-icons-left has-icons-right">
+              <input formControlName="password" class="input" type="password" placeholder="Wachtwoord">
+              <span class="icon is-small is-left">
+                <i class="fas fa-key"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="field is-grouped" id="button-group">
+            <div class="control">
+              <button class="button is-link" type="submit" [disabled]="!user.valid">Login</button>
+            </div>
+            <div class="control">
+              <button routerLink="/register" class="button is-help is-pulled-right">Registreren</button>
+            </div>
+          </div>
+        </form>
+        <div *ngIf="errorMsg" class="help is-danger">{{errorMsg}}</div>
       </div>
 
-      <!-- Password -->
-      <div class="field">
-        <label class="label">Wachtwoord</label>
-        <div class="control has-icons-left has-icons-right">
-          <input formControlName="password" class="input" type="text" placeholder="Wachtwoord">
-          <span class="icon is-small is-left">
-            <i class="fas fa-key"></i>
-          </span>
+    </div>
+  </div>
+  <div class="column">
+        <div class="notification is-primary">
+          Welkom bij  <strong>CityPinBoard</strong> waar je uw stad of dorp kunt bezoeken!  
+          Voeg hier een korte ervaring toe over uw stad of over een dorp die u onlangs bezocht heeft.<br>
+          <p class="is-italic">Als uw stand of dorp nog niet beschikbaar is, kunt u een aanvraag sturen naar volgende <a href="mailto:devrient.jonas@gmail.com" class="is-link">email</a>.
+          Dit gebeurt allemaal anoniem!
         </div>
-      </div>
-
-      <div class="field is-grouped" id="button-group">
-        <div class="control">
-          <button class="button is-link" type="submit" [disabled]="!user.valid">Login</button>
-        </div>
-      </div>
-    </form>
-    <div *ngIf="errorMsg" class="help is-danger">{{errorMsg}}</div>
-    <button routerLink="/register" class="button is-help">No account?</button>
   </div>
 </div>
-
