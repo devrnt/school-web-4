@@ -15,12 +15,12 @@
     </div>
     <div class="navbar-end">
       <a *ngIf="!currentUser" routerLink="/login" class="navbar-item">Login</a>
-      <div *ngIf="currentUser" class="dropdown" (click)="toggleDropDown()" [ngClass]="{
+      <div *ngIf="currentUser" class="dropdown is-transparent" (click)="toggleDropDown()" [ngClass]="{
         'is-active': dropDown
       }">
         <div class="dropdown-trigger">
-          <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-            <span>Welkom {{currentUsername}}</span>
+          <button class="button has-text-white btn" aria-haspopup="true" aria-controls="dropdown-menu">
+            <span>Hallo {{currentUsername}}!</span>
             <span class="icon is-small">
               <i class="fas fa-angle-down" aria-hidden="true"></i>
             </span>
