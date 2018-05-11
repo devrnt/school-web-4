@@ -18,7 +18,7 @@ require('./models/Post');
 
 require('./config/passport');
 
-mongoose.connect('mongodb://localhost/pinboardsdb');
+mongoose.connect('mongodb://localhost/pinboardsdb' || process.env.DATABASE_URI);
 
 const index = require('./routes/index');
 const users = require('./routes/users');
