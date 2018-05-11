@@ -20,7 +20,7 @@ export class PinboardService {
   constructor(private http: HttpClient) { }
 
   getAllPinboards(): Observable<Pinboard[]> {
-    return this.http.get(`${this._httpUrl}/pinboards`)
+    return this.http.get(`${this._httpUrl}pinboards`)
       .pipe(
         map((list: any[]): Pinboard[] =>
           list.map(Pinboard.fromJSON)
@@ -30,19 +30,19 @@ export class PinboardService {
 
   getPinboard(id: string): Observable<Pinboard> {
     return this.http
-      .get(`${this._httpUrl}/pinboard/${id}`)
+      .get(`${this._httpUrl}pinboard/${id}`)
       .pipe(map(Pinboard.fromJSON));
   }
 
   addPostToPinboard(post: Post, pinboard: Pinboard): Observable<Post> {
     return this.http
-      .post(`${this._httpUrl}/pinboard/${pinboard.id}/posts`, post)
+      .post(`${this._httpUrl}pinboard/${pinboard.id}/posts`, post)
       .pipe(map(Post.fromJSON));
   }
 
   addPinboard(pinboard: Pinboard): Observable<Pinboard> {
     return this.http
-      .post(`${this._httpUrl}/pinboards/`, pinboard)
+      .post(`${this._httpUrl}pinboards/`, pinboard)
       .pipe(map(Pinboard.fromJSON))
   }
 
