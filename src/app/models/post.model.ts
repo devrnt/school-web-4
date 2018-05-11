@@ -4,17 +4,19 @@ export class Post {
     private _body: string;
     private _dateCreated: Date;
     private _likes: number;
+    private _creator: string;
 
-    constructor(title: string, body: string, dateCreated: Date = null, likes: number = null) {
+    constructor(title: string, body: string, dateCreated: Date = null, likes: number = null, creator: string = null) {
         this._title = title;
         this._body = body;
         // if dateCreated is null check
         dateCreated ? this._dateCreated = dateCreated : this._dateCreated = new Date();
         likes ? this._likes = likes : this._likes = 0;
+        creator ? this._creator = creator : this._creator = "unknown";
     }
 
     static fromJSON(json: any): any {
-        let post = new Post(json.title, json.body, json.dateCreated, json.likes);
+        let post = new Post(json.title, json.body, json.dateCreated, json.likes, json.creator);
         post._id = json._id;
         return post;
     }
@@ -25,7 +27,8 @@ export class Post {
             title: this._title,
             body: this._body,
             dateCreated: this._dateCreated,
-            likes: this._likes
+            likes: this._likes,
+            creator: this._creator
         }
     }
 
@@ -49,6 +52,10 @@ export class Post {
         return this._likes;
     }
 
+    get creator(): string {
+        return this._creator;
+    }
+
     set likes(amount: number) {
         this._likes = amount;
     }
@@ -57,7 +64,7 @@ export class Post {
         this._likes++;
     }
 
-    removeLike(){
+    removeLike() {
         this._likes--;
     }
 }

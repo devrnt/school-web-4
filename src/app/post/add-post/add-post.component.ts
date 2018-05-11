@@ -4,6 +4,7 @@ import { Pinboard } from '../../models/pinboard.model';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { PinboardService } from '../../services/pinboard.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'add-post',
@@ -20,7 +21,8 @@ export class AddPostComponent implements OnInit {
 
   succes: boolean;
 
-  constructor(private formBuilder: FormBuilder, private _pinboardService: PinboardService) { }
+  constructor(private formBuilder: FormBuilder, private _pinboardService: PinboardService,
+  private _authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     this.newPost = this.formBuilder.group({
@@ -35,7 +37,7 @@ export class AddPostComponent implements OnInit {
     let post_title = this.newPost.value.title;
     let post_body = this.newPost.value.body;
     if (this.newPost.valid) {
-      let post = new Post(post_title, post_body);
+      let post = new Post(post_title, post_body, null, null, this._authenticationService.user$.getValue().username);
       // this.pinboard.posts.push(post);
       this._pinboardService.addPostToPinboard(post, this.pinboard)
         .subscribe(

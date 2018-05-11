@@ -16,7 +16,7 @@ export class AuthenticationService {
   private readonly _httpUrl = '/api/users';
 
   // Set the amount of minutes when a token should expire
-  private readonly _minutes = 20;
+  private readonly _minutes = 30;
 
   private readonly _tokenKey = 'currentUser';
   private readonly _likedPostsKey = 'likedPosts';

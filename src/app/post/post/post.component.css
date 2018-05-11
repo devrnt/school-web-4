@@ -22,3 +22,7 @@ span {
 .body-text {
     white-space: pre-wrap;
 }
+
+#creator {
+    min-width: 100px;
+}
