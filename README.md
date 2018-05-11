@@ -1,6 +1,11 @@
 # CityPinBoard
-this Angular web apps creates a possibilty to post something (small) on a 'virtual' pinboard for a corresponding city/village in Belgium.
+this Angular web apps creates a possibilty to post something (small) on a 'virtual' pinboard for a corresponding city/village in Belgium. This project was created in 2018.
 
+- Naam: Jonas De Vrient
+- Klas: 2A1
+- Link Heroku: (https://fast-refuge-72610.herokuapp.com/)
+
+---
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
 
 ## Development server
