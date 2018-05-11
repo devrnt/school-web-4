@@ -3,7 +3,7 @@ this Angular web apps creates a possibilty to post something (small) on a 'virtu
 
 - Naam: Jonas De Vrient
 - Klas: 2A1
-- Link Heroku: (https://fast-refuge-72610.herokuapp.com/)
+- Link Heroku: (https://citypinboard.herokuapp.com/)
 
 ---
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
