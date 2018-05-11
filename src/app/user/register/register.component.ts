@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl, FormC
 import { ObserveOnOperator } from 'rxjs/operators/observeOn';
 import { AuthenticationService } from '../../services/authentication.service';
 
-import { Observable } from 'rxjs/observable';
+import { Observable } from 'rxjs/Observable';
 import { catchError, map, tap, filter } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
